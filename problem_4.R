@@ -29,17 +29,21 @@ combinations(deck_values, targetValue)
 #### Solution 2 ####
   # from https://www.hackerrank.com/rest/contests/master/challenges/coin-change/hackers/shuangbaiba/download_solution 
 mat <- matrix(0,targetValue,length(deck_values)) # initializes matrix where sum of combinations will be counted
-dimnames(mat)[[2]] <- deck_values
-mat[i,1] <- 1 # with only 1-point cards, there is only one possible solution
-for (i in 2:length(deck_values)){ # iterates over all point values except 1-point which was set in previous line
+mat[,1] <- 1; # with 1 coin, there is only one possible combination for all target value iterations
+for (i in 2:length(deck_values)){ # iterates over all possible point values
   for (j in 1:targetValue){ # iterates over all values up to target value (200)
-    while((j-(j-1)*deck_values[i])>0){
-      mat[j,i] <- mat[j,i] + mat[j-(j-1)*deck_values[i], (i-1)] # number of combinations is 
+    k <- 0 # initializes variable k which is used to only sum correct combinations
+    while((j-k*deck_values[i])>0){ 
+      mat[j,i] <- mat[j,i] + mat[j-k*deck_values[i], (i-1)] # number of combinations is 
+      k <- k+1
     }
-    if ((j-(j-1)*deck_values[i])==0) mat[j,i] <- mat[j,i]+1
+    if ((j-k*deck_values[i])==0) mat[j,i] <- mat[j,i]+1
     }
 }
 cat(" With possible values being:",deck_values, "\n",
     "Target value being:", targetValue, "\n",
     "There are", mat[targetValue,length(deck_values)], "different combinations")
 mat[targetValue,length(deck_values)]
+
+
+
