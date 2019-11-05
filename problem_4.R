@@ -3,42 +3,14 @@ setwd('C:/Users/Yngve/Google Drive/Skolerelatert/NHH/Master/BAN401/BAN401 - Fina
 
 #### Problem 4 ####
 
-# We have a deck of an unlimited number of cards, where each card has only one of the
-# following values stamped on it:
-#   “1 point”, “2 points”, “5 points”, “10 points”, “20 points”, “50 points”, “1 megapoint”,
-# or “2 megapoints”.
-# Notations:
-#   1 megapoint = 100 points
-# 2 megapoints = 200 points
-# Based on the given specification, a possible scenario to buy one “2 megapoints”-card is to pay
-# with the following set of cards:
-#   - One “1 megapoint”-card
-# - Two “20 points”-cards
-# - One “50 points”-card
-# - Three “1 point”-cards
-# - One “2 points”-card
-# - One “5 points”-card
-# How many possible scenarios exist to buy one “2 megapoints”-card?
-#   Write an R code (one .r script) to solve this problem. Your code should display a result in the
-# RStudio console.
-# Requirements:
-#   - Solving this problem, you are not allowed to buy one “2 megapoints”-card paying with a “2
-# megapoints”-card
-# - Solving this problem, you are not allowed to have any packages loaded into your R script
-# (no library() allowed)
-
-deck_values <- c(1,2,5,20,50,100)
-targetValue <- 200
-
+# Solution 1 ####
+  # from https://www.geeksforgeeks.org/coin-change-dp-7/
 combinations <- function(deck, target) {
-  s <- deck_values
-  m <- length(deck_values)
-  n <- targetValue
-  
+
   tab <- matrix(0, nrow=target+1, ncol=1)
-  tab[1] = 1 # Base case (If given value is 0) 
+  tab[1] = 1 # Base case (If given value is 0)
   
-  # Pick all coins one by one and update the table[] values 
+  # Pick all coins one by one and update the tab[]-values 
   # after the index greater than or equal to the value of the 
   # picked coin 
   for (i in 1:length(deck)){
@@ -48,13 +20,13 @@ combinations <- function(deck, target) {
   }
   tail(tab,1)
 }
-
-deck_values_test <- c(1,2,3)
-targetValue_test <- 4
-
-combinations(deck_values_test, targetValue_test)
+# Using function on values from task
+deck_values <- c(1,2,5,20,50,100)
+targetValue <- 200
 combinations(deck_values, targetValue)
 
+
+#### Solution from geeksforgeeks ####
 
 # n = targetValue, S//arr = deck_values, m = len(s)
 # def count(S, m, n): 
@@ -83,3 +55,25 @@ combinations(deck_values, targetValue)
 # n = 4
 # x = count(arr, m, n) 
 # print (x) 
+
+
+
+
+#### Solution 2 ####
+  # from https://www.hackerrank.com/rest/contests/master/challenges/coin-change/hackers/shuangbaiba/download_solution 
+
+
+mat <- matrix(0,targetValue,length(deck_values))
+for (i in 2:length(deck_values)){
+  for (j in 1:targetValue){
+    k <- 0
+    while((j-k*deck_values[i])>0){
+      mat[j,i] <- mat[j,i] + mat[j-k*deck_values[i], (i-1)]
+      k <- k+1
+    }
+    if ((j - k*deck_values[i])==0){
+      mat[j,i]+1
+    }
+  }
+}
+write.table(ans[targetValue,length(deck_values)],row.names = F, col.names = F)
