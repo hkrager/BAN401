@@ -31,22 +31,29 @@ deck_values <- c(1,2,5,20,50,100)
 targetValue <- 200
 
 combinations <- function(deck, target) {
-s <- deck_values
-m <- length(deck_values)
-n <- targetValue
-
-tab <- matrix(0, nrow=n+1, ncol=1)
-tab[1] = 1 # Base case (If given value is 0) 
-
-# Pick all coins one by one and update the table[] values 
-# after the index greater than or equal to the value of the 
-# picked coin 
-for (i in 1:m){
-  for(j in s[i]:n+1){
-    tab[j] = tab[j] + tab[j-s[i]]
+  s <- deck_values
+  m <- length(deck_values)
+  n <- targetValue
+  
+  tab <- matrix(0, nrow=target+1, ncol=1)
+  tab[1] = 1 # Base case (If given value is 0) 
+  
+  # Pick all coins one by one and update the table[] values 
+  # after the index greater than or equal to the value of the 
+  # picked coin 
+  for (i in 1:length(deck)){
+    for(j in deck[i]:target+1){
+      tab[j] = tab[j] + tab[j-deck[i]]
+    }
   }
+  tail(tab,1)
 }
-}
+
+deck_values_test <- c(1,2,3)
+targetValue_test <- 4
+
+combinations(deck_values_test, targetValue_test)
+combinations(deck_values, targetValue)
 
 
 # n = targetValue, S//arr = deck_values, m = len(s)
