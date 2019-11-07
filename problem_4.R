@@ -1,6 +1,8 @@
 # set correct working directory
 setwd('C:/Users/Yngve/Google Drive/Skolerelatert/NHH/Master/BAN401/BAN401 - Final Assignment')
 
+# "permutations and combinations are not part of this course" (betyr at rekkefølge ikke betyr noe)
+
 #### Problem 4
 
 # Solution 1 ####
