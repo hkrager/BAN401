@@ -7,15 +7,24 @@ tab4 <- read.csv('ban401_fuzzy-matching-table4.csv', sep = ';')
 
 tab5 <- tab3 # table 5 is going to include the whole content of table 3, plus one new column
 grantedPatents <- c() # initializing new column where amount of patents will be kept
-for (i in 1:length(tab3$Company.name)){ # calculating number of granted patents for each company
-  companies[i] <- (strsplit(gsub("(?<=[a-z])(?=[A-Z])", perl = TRUE, ';\\1', as.character(droplevels(tab3$Company.name)[i])), ";"))
-    for (j in 1:length(companies)){
-      if (length(companies[[j]]) > 1) {
-        for (h in 1:length(companies[[j]])){
-          numberOfPatents <- length(agrep(h,
-                                          droplevels(tab4$Applicant[tab4$Status=="Granted"]), 
-                                          ignore.case = T))
-              }}}}
+companies[i] <- (strsplit(gsub("(?<=[a-z])(?=[A-Z])", perl = TRUE, ';\\1', as.character(droplevels(tab3$Company.name)[i])), ";"))
+  for (j in 1:length(companies)){
+    if (length(companies[[j]]) > 1) {
+      for (h in 1:length(companies[[j]])){
+        numberOfPatents <- length(agrep(h,
+                                        droplevels(tab4$Applicant[tab4$Status=="Granted"]), 
+                                        ignore.case = T))
+      }
+    }
+    else }
+
+glaxo <- unlist(strsplit(gsub("(?<=[a-z])(?=[A-Z])", 
+                     perl = TRUE, ';\\1', 
+                     as.character(droplevels(tab3$Company.name)[3])), 
+                ";"))
+agrep(glaxo[2],
+             droplevels(tab4$Applicant[tab4$Status=="Granted"]), 
+             ignore.case = T)
 
 tab5 <- cbind(tab3, patents) # combining the new patents column with the exisiting table 5
 colnames(tab5)[5] <- "Total number of patents" # changing column
