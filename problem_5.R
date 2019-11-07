@@ -22,6 +22,7 @@ for(i in 1:length(tab3$Company.name)){
     }
   }
 tab5$`Total number of patents` <- unlist(grantedPatents)
+row.names(tab5) <- NULL
 tab5 <- tab5[order(tab5$`Total number of patents`, decreasing = T),] # ordering data frame after number of granted patents
 head(tab5, n = 5) # displaying five companies with highest amount of granted patents
 
