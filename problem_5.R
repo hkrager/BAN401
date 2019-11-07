@@ -14,8 +14,9 @@ for(i in 1:length(tab3$Company.name)){
                                  as.character(droplevels(tab3$Company.name)[i])), ";"))
   
   for (j in length(companies[[i]])){
-    amountGranted <- length(agrep(companies[[i]][j], ignore.case = T),
-                                   droplevels(tab4$Applicant[tab4$Status=="Granted"]))
+    amountGranted <- length(agrep(companies[[i]][j],
+                                  droplevels(tab4$Applicant[tab4$Status=="Granted"]),
+                                  ignore.case = T))
     
     if (amountGranted != 0){grantedPatents[i] <- amountGranted} else{grantedPatents[i] <- 0}
     }
